@@ -1,70 +1,251 @@
-# Getting Started with Create React App
+<h1 align="center">
+  react-use-todo
+</h1>
+<p align="center">
+A lightweight todo app hook for React, Next.js, and Gatsby
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Why?
 
-## Available Scripts
+- **No dependencies**
+- 🔥 Persistent todos with local storage, or your own adapter
+- ⭐️ Supports multiples todos per page
+- 🥞 Works with Next, Gatsby, React
 
-In the project directory, you can run:
+## Quick Start
 
-### `yarn start`
+[Demo](https://codesandbox.io/s/react-use-todo-304lc)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+npm install react-use-todo # yarn add react-use-todo
+```
 
-### `yarn test`
+## `TodoProvider`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You will need to wrap your application with the `TodoProvider` component so that the `useTodo` hook can access the todo state.
 
-### `yarn build`
+Todos are persisted across visits using `localStorage`, unless you specify your own `storage` adapter.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+import { TodoProvider } from "react-use-todo";
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ReactDOM.render(
+  <TodoProvider>{/* render app/todo here */}</TodoProvider>,
+  document.getElementById("root")
+);
+```
 
-### `yarn eject`
+#### Props
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+| Prop           | Required | Description                                                                                                                                                |
+| -------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | _No_     | `id` for your todos to enable automatic todos retrieval via `window.localStorage`. If you pass a `id` then you can use multiple instances of `TodoProvider`. |
+| `defaultTodos` | _No_     | set initial state with defaultTodos .                                                                                                    |
+| `storage`      | _No_     | Must return `[getter, setter]`.                                                                                                    |
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## `useTodo`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The `useTodo` hook exposes all the getter/setters for your todo state.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `loading: boolean`
 
-## Learn More
+The `loading` variable gives you loading state. Useful for async task.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```js
+import { useTodo } from "react-use-todo";
 
-### Code Splitting
+const { loading } = useTodo();
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+if (loading) // do something
+else // something
+```
 
-### Analyzing the Bundle Size
+### `toggleLoading(loading: boolean)`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The `toggleLoading` method will help you set the loading state. Useful for async task.
 
-### Making a Progressive Web App
+#### Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+import { useTodo } from "react-use-todo";
 
-### Advanced Configuration
+const { toggleLoading, loading } = useTodo();
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+useEffect(() => {
+  toggleLoading(true);
+  fetch(url).then(data => toggleLoading(false);)
+}, [])
 
-### Deployment
+if (loading) // Show loading state
+else // Show data
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### `todos: Array<Object>`
 
-### `yarn build` fails to minify
+The `todos` contains the list of todos.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { todos } = useTodo();
+
+<ul>
+  {todos.map(todo => <li key={todo.id}>{todos.text}</li>)}
+</ul>
+```
+
+### `filterdTodos: Object`
+
+The `filterdTodos` filtered array based on the selected filter.
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { filterdTodos: { todos } } = useTodo();
+
+<ul>
+  {todos.map(todo => <li key={todo.id}>{todos.text}</li>)}
+</ul>
+```
+
+### `filtereTodos(by: string)`
+
+The `filtereTodos` method to filter todos based on selected filter. Available value (ALL, COMPLETED, UNCOMPLETED)
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const {
+  filtereTodos,
+  filterdTodos: { filterdBy },
+} = useTodo();
+
+<div>
+  <button
+    style={{ backgroundColor: filterdBy === "all" && "red" }}
+    onClick={(_) => filtereTodos("ALL")}
+  >
+    All
+  </button>
+  <button
+    style={{ backgroundColor: filterdBy === "completed" && "red" }}
+    onClick={(_) => filtereTodos("COMPLETED")}
+  >
+    Completed
+  </button>
+  <button
+    style={{ backgroundColor: filterdBy === "uncompleted" && "red" }}
+    onClick={(_) => filtereTodos("UNCOMPLETED")}
+  >
+    Uncompleted
+  </button>
+</div>
+```
+
+
+### `setTodos(Array<Object>)`
+
+The `setTodos` method to replace todos with passed todos. Useful for api data.
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { setTodos } = useTodo();
+
+const todos = [{
+  id: Date.now(),
+  text: 'first todo',
+  completed: false,
+}]
+setTodos(todos);
+```
+
+### `addTodo(Object)`
+
+The `addTodo` method to add new todo.
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { addTodo } = useTodo();
+
+// these keys are mandatory to pass while adding your todo.
+const todo = {
+  id: Date.now(),
+  text: 'first todo',
+  completed: false,
+}
+addTodo(todo);
+```
+
+### `toggleTodo(todoId: string | number)`
+
+The `toggleTodo` method to toggle the completd state of todo.
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { toggleTodo } = useTodo();
+
+const todo = {
+  id: Date.now(),
+  text: 'first todo',
+  completed: false,
+}
+<input
+  id={todo.id}
+  type="checkbox"
+  value={todo.completed}
+  checked={todo.completed}
+  onChange={(e) => toggleTodo(todo.id)}
+/>
+```
+
+### `updateTodo(todoId: string | number, text: string)`
+
+The `updateTodo` method to update the text of todo.
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { updateTodo, filterdTodos: { todos } } = useTodo();
+
+updateTodo(todos[0].id, 'Update this');
+```
+
+
+### `removeTodo(todoId: string)`
+
+The `removeTodo` method to remove todo.
+
+#### Usage
+
+```js
+import { useTodo } from "react-use-todo";
+
+const { removeTodo, filterdTodos: { todos } } = useTodo();
+
+removeTodo(todos[0].id);
+```

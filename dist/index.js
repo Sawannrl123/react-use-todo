@@ -146,6 +146,7 @@ const TodoProvider = (_ref) => {
   const addTodo = todo => {
     if (!todo.id) throw new Error("You must provide an `id` for todo");
     if (!todo.hasOwnProperty("completed")) throw new Error("You must pass a `completed` for new todo");
+    if (!todo.hasOwnProperty("text")) throw new Error("You must pass a `text` for new todo");
     dispatch({
       type: "ADD_TODO",
       todo
@@ -164,7 +165,7 @@ const TodoProvider = (_ref) => {
   };
 
   const updateTodo = (id, text) => {
-    if (!id) {
+    if (!id && !text) {
       return;
     }
 
@@ -184,6 +185,8 @@ const TodoProvider = (_ref) => {
   };
 
   const filtereTodos = by => {
+    if (!by) return;
+
     switch (by) {
       case 'ALL':
         {
@@ -224,6 +227,14 @@ const TodoProvider = (_ref) => {
     }
   };
 
+  const toggleLoading = loading => {
+    if (loading === undefined || loading === null) return;
+    dispatch({
+      type: "TOGGLE_LOADING",
+      loading
+    });
+  };
+
   return /*#__PURE__*/_react.default.createElement(TodoContext.Provider, {
     value: _objectSpread(_objectSpread({}, state), {}, {
       filterdTodos,
@@ -232,7 +243,8 @@ const TodoProvider = (_ref) => {
       addTodo,
       toggleTodo,
       updateTodo,
-      removeTodo
+      removeTodo,
+      toggleLoading
     })
   }, children);
 };

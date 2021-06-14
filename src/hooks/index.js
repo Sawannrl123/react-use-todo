@@ -133,6 +133,9 @@ export const TodoProvider = ({
 
     if (!todo.hasOwnProperty("completed"))
       throw new Error("You must pass a `completed` for new todo");
+    
+    if (!todo.hasOwnProperty("text"))
+      throw new Error("You must pass a `text` for new todo");
 
     dispatch({ type: "ADD_TODO", todo });
   };
@@ -146,7 +149,7 @@ export const TodoProvider = ({
   };
 
   const updateTodo = (id, text) => {
-    if (!id) {
+    if (!id && !text) {
       return;
     }
 
@@ -160,6 +163,7 @@ export const TodoProvider = ({
   };
 
   const filtereTodos = by => {
+    if(!by) return;
     switch(by) {
       case 'ALL': {
         setFilteredTodos({
@@ -193,6 +197,11 @@ export const TodoProvider = ({
     }
   } 
 
+  const toggleLoading = (loading) => {
+    if(loading === undefined || loading === null) return;
+    dispatch({ type: "TOGGLE_LOADING", loading });
+  }
+
   return (
     <TodoContext.Provider
       value={{
@@ -204,6 +213,7 @@ export const TodoProvider = ({
         toggleTodo,
         updateTodo,
         removeTodo,
+        toggleLoading,
       }}
     >
       {children}
