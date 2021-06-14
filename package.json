@@ -1,8 +1,31 @@
 {
   "name": "react-use-todo",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "Light weighted hook to build todo app",
+  "author": "Sawan Nirala",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "hooks",
+    "todos",
+    "todo"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sawannrl123/react-use-todo.git"
+  },
   "dependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.14.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -14,6 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "buildHook": "set NODE_ENV=production && babel src/hooks --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
