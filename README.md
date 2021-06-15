@@ -2,7 +2,10 @@
   react-use-todo
 </h1>
 <p align="center">
-A lightweight todo app hook for React, Next.js, and Gatsby
+A lightweight todo app hook for React, Next.js, and Gatsby.
+</p>
+<p align="center">
+It helps you to build todo app with different skins without worring about the logic part. It has many utility methods available on the hook.
 </p>
 
 <p align="center">
