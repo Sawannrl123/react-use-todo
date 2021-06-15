@@ -1,6 +1,6 @@
 {
   "name": "react-use-todo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "description": "Light weighted hook to build todo app",
   "author": "Sawan Nirala",
