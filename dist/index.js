@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.TodoProvider = exports.useTodo = exports.createTodoIdentifier = exports.initialState = void 0;
 
-require("core-js/modules/web.dom-collections.iterator.js");
-
-require("core-js/modules/es.regexp.to-string.js");
-
 var _react = _interopRequireDefault(require("react"));
 
 var _useLocalStorage = _interopRequireDefault(require("./useLocalStorage"));
