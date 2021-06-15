@@ -4,6 +4,7 @@
   "private": false,
   "description": "Light weighted hook to build todo app",
   "author": "Sawan Nirala",
+  "license": "Apache-2.0",
   "keywords": [
     "react",
     "components",
@@ -34,7 +35,6 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "react-use-todo": "^0.2.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

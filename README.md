@@ -5,8 +5,28 @@
 A lightweight todo app hook for React, Next.js, and Gatsby
 </p>
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/react-use-todo">
+    <img src="https://img.shields.io/npm/v/react-use-todo.svg" alt="Version" />
+  </a>
+  <a href="https://www.npmjs.com/package/react-use-todo">
+    <img src="https://img.shields.io/npm/dw/react-use-todo.svg" alt="Downloads/week" />
+  </a>
+  <a href="https://github.com/Sawannrl123/react-use-todo/blob/main/package.json">
+    <img src="https://img.shields.io/npm/l/react-use-todo.svg" alt="License" />
+  </a>
+  <a href="https://github.com/Sawannrl123/react-use-todo/network/members">
+    <img src="https://img.shields.io/github/forks/Sawannrl123/react-use-todo" alt="Forks on GitHub" />
+  </a>
+  <a href="https://github.com/Sawannrl123/react-use-todo/stargazers">
+    <img src="https://img.shields.io/github/stars/Sawannrl123/react-use-todo" alt="Forks on GitHub" />
+  </a>
+  <img src="https://badgen.net/bundlephobia/minzip/react-use-todo" alt="minified + gzip size" />
+</p>
+
 ## Why?
 
+- ![Bundle size](https://badgen.net/bundlephobia/minzip/react-use-todo)
 - **No dependencies**
 - 🔥 Persistent todos with local storage, or your own adapter
 - ⭐️ Supports multiples todos per page
